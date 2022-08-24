@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:div.th="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Current time</title>
+</head>
+<body>
+    <div th:if="!${currentTimeLabel}">
+        <h1 th:text="'Current time: ' + ${time}"></h1>
+    </div>
+    <div th:if="${currentTimeLabel}">
+        <h1 th:text="${currentTimeLabel} + ': ' + ${time}"></h1>
+    </div>
+</body>
+</html>
