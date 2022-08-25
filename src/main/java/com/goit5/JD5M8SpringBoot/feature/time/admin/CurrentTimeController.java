@@ -1,12 +1,14 @@
-package com.goit5.JD5M8SpringBoot.mvc;
+package com.goit5.JD5M8SpringBoot.feature.time.admin;
 
+import com.goit5.JD5M8SpringBoot.feature.time.pojo.CurrentTimeRequest;
+import com.goit5.JD5M8SpringBoot.feature.time.pojo.CurrentTimeResponse;
+import com.goit5.JD5M8SpringBoot.feature.time.service.CurrentTimeService;
+import com.goit5.JD5M8SpringBoot.feature.time.InvalidTimeZoneException;
+import com.goit5.JD5M8SpringBoot.mvc.LocalizeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @RequestMapping("/current-time") //якщо в усьму класі є загальна частинка посилання то її можна винисти сюда
 @Controller
@@ -29,6 +31,28 @@ public class CurrentTimeController {
         ModelAndView result = new ModelAndView("current-time");
         result.addObject("time", currentTimeService.getCurrentTime(timezone));
         return result;
+        //Адреса звернення: localhost:8080/current-time/get
+    }
+
+    @ResponseBody
+    @GetMapping("/getAsString")
+    public String getCurrentTimeAsString(@RequestParam(required = false, name = "tz", defaultValue = "UTC") String timezone) {
+        return currentTimeService.getCurrentTime(timezone);
+        //Адреса звернення: localhost:8080/current-time/getAsString
+    }
+
+    @ResponseBody
+    @GetMapping("/getAsObject")
+    public CurrentTimeResponse getCurrentTimeAsObject(@RequestParam(required = false, name = "tz", defaultValue = "UTC") String timezone) {
+        try {
+            return CurrentTimeResponse.success(currentTimeService.getCurrentTime(timezone));
+        } catch (InvalidTimeZoneException ex) {
+            ex.printStackTrace();
+
+            return CurrentTimeResponse.failed(CurrentTimeResponse.Error.invalidTimezone);
+        }
+        //Адреса звернення: localhost:8080/current-time/getAsObject
+        //http://localhost:8080/current-time/getAsObject?tz=UTC
     }
 
     @PostMapping("/post-x-form-url-encoded")

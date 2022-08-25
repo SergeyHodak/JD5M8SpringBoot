@@ -1,25 +1,31 @@
-package com.goit5.JD5M8SpringBoot.mvc;
+package com.goit5.JD5M8SpringBoot.feature.time.service;
 
+import com.goit5.JD5M8SpringBoot.feature.time.InvalidTimeZoneException;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.TimeZone;
 
 @Service
 public class CurrentTimeService {
-    public String getCurrentTime(String timezone) {
+    public String getCurrentTime(String timezone) throws InvalidTimeZoneException {
         return getCurrentTime(timezone,"yyyy.MM.dd hh:mm:ss");
     }
 
-    public String getCurrentTime(String timezone, String format) {
+    public String getCurrentTime(String timezone, String format) throws InvalidTimeZoneException {
         if (timezone == null) {
             return LocalDateTime.now().format(
                     DateTimeFormatter.ofPattern(format)
             );
+        }
+
+        if (!isTimezoneExists(timezone)) {
+            throw new InvalidTimeZoneException(timezone);
         }
 
         Date date = new Date();
@@ -27,5 +33,9 @@ public class CurrentTimeService {
         df.setTimeZone(TimeZone.getTimeZone(timezone));
 
         return df.format(date);
+    }
+
+    private boolean isTimezoneExists(String timezone) {
+        return Arrays.asList(TimeZone.getAvailableIDs()).contains(timezone);
     }
 }

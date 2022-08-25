@@ -1,4 +1,4 @@
-package com.goit5.JD5M8SpringBoot.mvc;
+package com.goit5.JD5M8SpringBoot.feature.time.pojo;
 
 import lombok.Data;
 

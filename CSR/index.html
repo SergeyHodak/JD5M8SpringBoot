@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!--CSR- клієнт сент рендер, запустити цю папку в візуал коді
+        в VS code встановити плагін Live Server
+        Вид/внешний вид/строка состояния (показати/сховати нижню панель). це нижня панель інструментів на ній повинна зьявитись кнопка Go Live
+        пошуковий запит в гугл пошуковику: jquery cdn
+        з списку результатів обрати сайт: https://releases.jquery.com
+        напроти останньї версії обрати uncompressed та скопіювати, вставити нижче цого запису
+        P.S. Після проведених налаштувань код працює і без VS code
+    -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <h1>TIME HERE</h1>
+
+    <script>
+        function updateTime() {
+            const apiUrl = 'http://localhost:8080/api/v1/time';
+
+            var request = $.ajax({
+                url: apiUrl,
+                method: "GET",
+                data: {},
+                dataType: "html"
+            });
+
+            request.done(function(msg) {
+                const time = JSON.parse(msg).time;
+                $('h1').text(time);
+            });
+
+            request.fail(function(jqXHR, textStatus) {
+                alert(JSON.stringify(jqXHR));
+            });
+        };
+
+        setInterval(() => updateTime(), 1000);
+    </script>
+</body>
+</html>
