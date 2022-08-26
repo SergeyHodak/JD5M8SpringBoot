@@ -1,6 +1,8 @@
 package com.goit5.JD5M8SpringBoot.feature.time.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -9,9 +11,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, String> {
+public interface UserRepository extends JpaRepository<User, String>, JpaSpecificationExecutor<User> {
     // класс репозиторій для роботи с ентіті
     //JpaRepository<1,2> //1 - якого типу ентіті. 2 - якого типу первинний ключь
+    //JpaSpecificationExecutor<User> //дає репозиторію додаткові методи які описані в цьому інтерфейсі (щось повязане з предикатами)
 
     @Query("from User u where lower(u.email) like lower(:query) or lower(u.fullName) like lower(:query)") //HQL
     List<User> search(@Param("query") String query);
@@ -31,4 +34,8 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Query(nativeQuery = true, value =
             "SELECT count(*) FROM \"user\" WHERE birthday < :maxBirthday")
     int countOlderThan(LocalDate maxBirthday);
+
+    @Modifying //Вказівник що цей запит модифікує базу данних
+    @Query(nativeQuery = true, value = "DELETE FROM \"user\" WHERE email IN (:emails)")
+    void deleteAllByEmails(@Param("emails") List<String> emails);
 }

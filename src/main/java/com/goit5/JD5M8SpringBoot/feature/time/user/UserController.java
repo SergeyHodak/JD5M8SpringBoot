@@ -3,10 +3,12 @@ package com.goit5.JD5M8SpringBoot.feature.time.user;
 import com.goit5.JD5M8SpringBoot.feature.time.user.dto.DeleteUserResponse;
 import com.goit5.JD5M8SpringBoot.feature.time.user.dto.SaveUserResponse;
 import com.goit5.JD5M8SpringBoot.feature.time.user.dto.UserDTO;
+import com.goit5.JD5M8SpringBoot.feature.time.user.dto.UserInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -59,6 +61,25 @@ public class UserController {
         //Посилання запиту: localhost:8080/api/v1/user/delete/john.doe@mail.com
     }
 
+    @PostMapping("/deleteAll")
+    public DeleteUserResponse deleteAll(@RequestBody List<String> emails) {
+        boolean thereAreNonExistingEmails = emails == null || emails.stream().allMatch(email -> !userService.exists(email));
+        if (thereAreNonExistingEmails) {
+            return DeleteUserResponse.failed(DeleteUserResponse.Error.userNotFound);
+        }
+
+        userService.deleteByIds(emails);
+
+        return DeleteUserResponse.success();
+
+        //Посилання запиту: localhost:8080/api/v1/user/deleteAll
+        //Тіло запиту: JSON
+        //[
+        //    "john.doe@mail.com",
+        //    "john.doe1@mail.com"
+        //]
+    }
+
     @GetMapping("/search")
     public List<UserDTO> search(@RequestParam(name = "query", required = false) String query,
                                 HttpServletResponse response) {
@@ -76,5 +97,28 @@ public class UserController {
     public int countPeopleOlderThan(@PathVariable("age") int age) {
         return userService.countPeopleOlderThan(age);
         //Посилання запиту: localhost:8080/api/v1/user/countOlderThen/30
+    }
+
+    @GetMapping("/info/{email}")
+    public UserInfo getUserInfo(@PathVariable("email") String email) {
+        //return userService.getUserInfo(email);
+        return userService.getUserInfoV2(email);
+
+        //Посилання запиту: localhost:8080/api/v1/user/info/john.doe1@mail.com
+    }
+
+    @GetMapping("/between")
+    public List<User> getUsersBetween(@RequestParam("start") String start,
+                                      @RequestParam("end") String end) {
+        //складний предикат
+        return userService.getUsersBetween(
+                LocalDate.parse(start),
+                LocalDate.parse(end)
+        );
+
+        //Посилання запиту: localhost:8080/api/v1/user/between
+        //Параметри:
+        // "key=start": "value:1990-01-01"
+        // "key=end": "value:2022-01-01"
     }
 }
