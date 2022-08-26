@@ -1,11 +1,10 @@
-package com.goit5.JD5M8SpringBoot.feature.time.user;
+package com.goit5.JD5M8SpringBoot.feature.user;
 
-import com.goit5.JD5M8SpringBoot.feature.time.user.dto.UserDTO;
-import com.goit5.JD5M8SpringBoot.feature.time.user.dto.UserInfo;
+import com.goit5.JD5M8SpringBoot.feature.user.dto.UserDTO;
+import com.goit5.JD5M8SpringBoot.feature.user.dto.UserInfo;
 import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.jdbc.core.RowMapper;
@@ -13,7 +12,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;

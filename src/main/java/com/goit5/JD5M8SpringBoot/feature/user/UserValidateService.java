@@ -1,4 +1,4 @@
-package com.goit5.JD5M8SpringBoot.feature.time.user;
+package com.goit5.JD5M8SpringBoot.feature.user;
 
 import org.springframework.stereotype.Service;
 

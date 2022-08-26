@@ -1,4 +1,4 @@
-package com.goit5.JD5M8SpringBoot.feature.time.user.dto;
+package com.goit5.JD5M8SpringBoot.feature.user.dto;
 
 import lombok.Data;
 

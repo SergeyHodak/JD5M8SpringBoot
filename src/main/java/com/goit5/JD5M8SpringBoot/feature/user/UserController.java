@@ -1,9 +1,9 @@
-package com.goit5.JD5M8SpringBoot.feature.time.user;
+package com.goit5.JD5M8SpringBoot.feature.user;
 
-import com.goit5.JD5M8SpringBoot.feature.time.user.dto.DeleteUserResponse;
-import com.goit5.JD5M8SpringBoot.feature.time.user.dto.SaveUserResponse;
-import com.goit5.JD5M8SpringBoot.feature.time.user.dto.UserDTO;
-import com.goit5.JD5M8SpringBoot.feature.time.user.dto.UserInfo;
+import com.goit5.JD5M8SpringBoot.feature.user.dto.DeleteUserResponse;
+import com.goit5.JD5M8SpringBoot.feature.user.dto.SaveUserResponse;
+import com.goit5.JD5M8SpringBoot.feature.user.dto.UserDTO;
+import com.goit5.JD5M8SpringBoot.feature.user.dto.UserInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

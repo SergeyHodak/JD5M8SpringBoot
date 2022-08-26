@@ -1,7 +1,7 @@
-package com.goit5.JD5M8SpringBoot.feature.time.user.dto;
+package com.goit5.JD5M8SpringBoot.feature.user.dto;
 
-import com.goit5.JD5M8SpringBoot.feature.time.user.Gender;
-import com.goit5.JD5M8SpringBoot.feature.time.user.User;
+import com.goit5.JD5M8SpringBoot.feature.user.Gender;
+import com.goit5.JD5M8SpringBoot.feature.user.User;
 import lombok.Builder;
 import lombok.Data;
 
