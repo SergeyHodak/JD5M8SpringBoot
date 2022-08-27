@@ -19,18 +19,28 @@ public class DefaultSecurityConfig {
     private final CustomAuthProvider authProvider;
 
     @Bean
-    PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
-
-    @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+        //запит для гугляжу: ant matchers
         http
+                //типу все що по вказаній адресі доступно без авторизації
+
                 .authorizeRequests()
+                .antMatchers("/api/v1/**")
+                .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
-                //добавки вище говарять щобудь який запит повинен бути аунтетифікований
+
+//                //щоб все було дозволино
+//                //будь який запит повинен бути аунтетифікований
+//                .authorizeRequests()
+//                .anyRequest()
+//                .authenticated()
+//                .and()
+
+                .httpBasic()
+                .and()
+
 //                .authorizeRequests()
 //                .antMatchers(HttpMethod.GET, "/auth").hasAnyRole() //може зайти юзер з бедь якою ролью на таке посилання за методом гет
 //                .antMatchers(HttpMethod.GET, "/non-auth").permitAll() //дозволяєм всім

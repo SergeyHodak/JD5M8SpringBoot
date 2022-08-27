@@ -1,0 +1,8 @@
+#server.port=10000
+
+#показувати sql запити в консоль
+#spring.jpa.show-sql=true
+#глянути список доступних налаштувань: гугл- spring boot application.properties
+
+#є змінна appName для неї беремо значення з змінної оточення APP_NAME
+appName=${APP_NAME}

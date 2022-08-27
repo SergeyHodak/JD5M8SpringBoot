@@ -50,5 +50,6 @@ public class AuthController {
         }
 
         return new ModelAndView("superadmin");
+        //Адреса звернення: localhost:8080/auth/superadmin
     }
 }

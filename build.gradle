@@ -38,3 +38,26 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+bootJar {
+	//	як назвати файл який є результатом зборки проекту в jar
+	archiveFileName = "testapp.jar"
+}
+
+//tasks.register('release') { //нова таска
+//	doLast {
+//		copy()
+//	}
+//}
+
+tasks.register('release', Copy) { //копіювати файл
+//	doLast {
+//		println layout.buildDirectory.file("./libs/testapp.jar") //подивитись що тут
+//	}
+//	from layout.buildDirectory.fille("./build/libs/testapp.jar") //звідки який
+//	into layout.buildDirectory.dir("testapp.jar") //куди як
+	from './build/libs/testapp.jar' //звідки який
+	into './' //куди
+}
+
+release.dependsOn bootJar //перед початком виконання релізу виконай бут джар
